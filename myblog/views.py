@@ -85,11 +85,26 @@ class ArticleDetail(DetailView):
         context['comment_list'] = self.comment_sort(comments)   # 将排序归类后的文章列表存入传送到模板的数据中
         comment_form = CommentForm()    # 创建评论表单对象
         context['comment_form'] = comment_form  # 将表单对象传送到模板数据中
+
+        try:
+            # 将session数据存入传送到模板的数据中
+            context['session'] = {
+                'name': self.request.session['name'],
+                'email': self.request.session['email'],
+                'content': self.request.session['content']
+            }
+        except:     # session读取异常时不做处理
+            pass
+
         return context
 
 
 def pub_comment(request):   # 发布评论函数
     if request.method == 'POST':    # 如果是post请求
+
+        request.session['name'] = request.POST.get('name')  # 将请求中的昵称存入session
+        request.session['email'] = request.POST.get('email')  # 将请求中的邮箱存入session
+
         comment = Comment()     # 创建评论对象
         comment.article = Article.objects.get(id=request.POST.get('article'))   #设置评论所属文章
         if request.POST.get('reply') != '0':    # 如果回复的不是文章而是他人评论
@@ -99,8 +114,10 @@ def pub_comment(request):   # 发布评论函数
             try:
                 form.save()     # 将表单数据存入数据库
                 result = '200'  # 提交结果为成功的编码
+                request.session['content'] = ''     # 发布成功时session中存储的内容置空
             except:     # 如果发生异常
                 result = '100'  # 提交结果为失败的编码
+                request.session['content'] = request.POST.get('content')  # 发布失败时将内容存入session
 
         else:   # 如果表单数据校验无效
             result = '100'  # 提交结果为失败的编码
