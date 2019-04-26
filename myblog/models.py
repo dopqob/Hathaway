@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django_summernote.fields import SummernoteTextField
+from DjangoUeditor.models import UEditorField
 
 
 class Category(models.Model):       # 文章类别
@@ -28,7 +30,9 @@ class Article(models.Model):        #文章
     id = models.AutoField(primary_key=True)
     author = models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name='作者')
     title = models.CharField('标题', max_length=50)
-    content = models.TextField('内容')
+    # content = models.TextField('内容')
+    # content = SummernoteTextField('内容')
+    content = UEditorField(verbose_name='课程详情',width=1000,height=400,upload_settings={"imageMaxSize":1204000},default='')
     pub_time = models.DateField('日期', auto_now=True)
     category = models.ForeignKey(Category, on_delete=models.SET_DEFAULT, default=1, verbose_name='类别')
     tag = models.ManyToManyField(Tag, verbose_name='标签')

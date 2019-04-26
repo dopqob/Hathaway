@@ -1,4 +1,4 @@
-from django.shortcuts import HttpResponse
+from django.shortcuts import HttpResponse, render
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
 from .models import *
@@ -124,3 +124,8 @@ def pub_comment(request):   # 发布评论函数
         return HttpResponse(result)     # 返回提交结果到页面
     else:
         return HttpResponse('非法请求！')
+
+
+# 测试前台的summernote富文本编辑器
+def summernote(request):
+    return render(request, 'summernote.html')

@@ -18,10 +18,10 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', views.Index.as_view()),
     path('category/<int:category>', views.CategoryList.as_view(), name='category'),
     path('search/', views.Search.as_view(), name='search'),
     path('detail/<int:pk>', views.ArticleDetail.as_view(), name='detail'),
     path('comment/', views.pub_comment, name='comment'),
+    path('summernote/', views.summernote),  # 测试前台summernote富文本编辑器
 ]

@@ -12,12 +12,11 @@
     <script src="{% static '/js/bootstrap.min.js' %}"></script>
     <script src="{% static '/js/common.js' %}"></script>
     <link rel="stylesheet" href="{% static '/css/style.css' %}">
-    {% block js %}{% endblock %}
 </head>
-<body>
+<body onload="onload()">
 {% include 'nav.html' %}
 <!-- 顶部导航 -->
-<div class="container"> <!-- 容器 -->
+<div id="container" class="container"> <!-- 容器 -->
     <div class="row clearfix"><!-- 容器中的行 -->
         <div class="col-md-9 column"><!-- 行中的列：col-md-9表示此列宽度为页面主体宽度的9/12。 -->
             <!--主要内容-->

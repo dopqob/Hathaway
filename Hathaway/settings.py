@@ -11,9 +11,12 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -24,8 +27,10 @@ SECRET_KEY = '@*lzss#qea7r-idx(eqv=xwv6-7+j0ux%d2fkk+z1*cr*ca6t2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False   # # 编辑器的粗体、斜体等功能，在执行“collectstatic”命令之前需要关闭DEBUG模式才能正常使用
 
 ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['*']   # # DEBUG模式关闭时，必须设置此项，生产环境中应为域名
 
 
 # Application definition
@@ -38,6 +43,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myblog.apps.MyblogConfig',
+    'django_summernote',
+    'xadmin',
+    'crispy_forms',
+    'DjangoUeditor',
 ]
 
 MIDDLEWARE = [
@@ -55,8 +64,7 @@ ROOT_URLCONF = 'Hathaway.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,3 +132,38 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')    # 官方文档为“media/”，实际测试中导致图片上传不显示
+
+SUMMERNOTE_CONFIG = {
+    # 是否使用IFrame的方式，不使用的话必须加载Bootstrap/jQuery。
+    'iframe': True,
+    # 以下为SummerNote自定义设置
+    'summernote': {
+        # 隐身模式
+        'airMode': False,
+        # 编辑器的尺寸
+        'width': '75%',
+        'height': '450',
+        # 语言设置
+        'lang': 'zh-CN',
+        # 设置字体列表
+        'fontNames':
+            [
+                'Arial',
+                'Arial Black',
+                'Comic Sans MS',
+                'Courier New',
+                '宋体',  # 也可以写为“Songti”
+                'Microsoft YaHei'  # 也可以写为“微软雅黑”
+            ]
+    },
+    # 附加样式表
+    'css': (
+        # '/static/summernote/theme/paper.css',  # 附加编辑器主题
+        # '/static/summernote/theme/simplex.css',   # 多个主题时默认加载最后一个，建议注释不使用的主题。
+        # '/static/summernote/theme/cosmo.css',
+    ),
+}

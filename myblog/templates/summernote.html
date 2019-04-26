@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SummerNote</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}">
+    <script src="{% static '/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static '/js/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static '/summernote/summernote.css' %}">
+    <script src="{% static '/summernote/summernote.js' %}"></script>
+    <script src="{% static '/summernote/lang/summernote-zh-CN.js' %}"></script><!--加载中文-->
+    <link rel="stylesheet" href="{% static '/summernote/theme/paper.css.css' %}"><!--加载主题-->
+</head>
+<body>
+    <!--第1种添加方式-->
+{#    <div id="summernote">www.opython.com 原创教程</div>#}
+
+    <!--第2种添加方式：使用时取消注释-->
+    <form method="post">
+        <textarea id="summernote" name="editordata"></textarea>
+    </form>
+    <script>
+        $(document).ready(function () {
+            $('#summernote').summernote({#编辑器设置#}
+                {
+                    width: 1000,
+                    height: 480,
+                    focus: true, {#页面打开时光标自动进入编辑区#}
+                    lang: 'zh-CN',
+                    toolbar: [{#工具栏加载项设置#}
+                        ['style', ['style']], {#文本样式#}
+                        ['font', ['bold', 'italic', 'underline', 'superscript', 'subscript',
+                            'strikethrough', 'clear']], {#字体样式#}
+                        ['fontname', ['fontname']], {#字体列表#}
+                        ['fontsize', ['fontsize']], {#字体尺寸#}
+                        ['color', ['color']], {#字体颜色#}
+                        ['para', ['ul', 'ol', 'paragraph']], {#文本列表#}
+                        ['height', ['height']], {#行高#}
+                        ['table', ['table']], {#表格#}
+                        ['insert', ['link', 'picture', 'video', 'hr']], {#插入项#}
+                        ['view', ['fullscreen', 'codeview']], {#视图#}
+                        ['help', ['help']]{#帮助#}
+                    ],
+                    fontNames:
+                        [
+                            'Arial',
+                            'Arial Black',
+                            'Comic Sans MS',
+                            'Courier New',
+                            '宋体',
+                            'Microsoft YaHei'
+                        ]
+                }
+            );
+        });
+    </script>
+</body>
+</html>
